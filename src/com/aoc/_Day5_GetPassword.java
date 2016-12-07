@@ -1,6 +1,5 @@
 package com.aoc;
 
-import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -9,6 +8,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
+
+import javax.xml.bind.DatatypeConverter;
 
 public class _Day5_GetPassword {
 
@@ -21,7 +22,7 @@ public class _Day5_GetPassword {
 				break;
 			}
 		}
-		System.out.println(getPassword(nextLine));
+		//System.out.println(getPassword(nextLine));
 		System.out.println(getSubstitutionPassword(nextLine));
 		scanner.close();
 		
@@ -36,9 +37,11 @@ public class _Day5_GetPassword {
 				byte[] byteArray= (code + i).getBytes(StandardCharsets.UTF_8);
 				byte[] digest = instance.digest(byteArray);
 				
-				BigInteger bi = new BigInteger(1, digest);
-				String hex = String.format("%0" + (digest.length << 1) + "X", bi);	
-				System.out.println( code +i + "\t\t" + bi.longValue());
+				//Using Daniel's approach
+				String hex = DatatypeConverter.printHexBinary(digest);
+				//BigInteger bi = new BigInteger(1, digest);
+				//String hex = String.format("%0" + (digest.length << 1) + "X", bi);	
+				//System.out.println( code +i + "\t\t" + bi.longValue());
 				if(hex.startsWith("00000")) {
 					++count;
 					sb.append(hex.charAt(5));
@@ -64,8 +67,11 @@ public class _Day5_GetPassword {
 				byte[] byteArray= (code + i).getBytes(StandardCharsets.UTF_8);
 				byte[] digest = instance.digest(byteArray);
 				
-				BigInteger bi = new BigInteger(1, digest);
-				String hex = String.format("%0" + (digest.length << 1) + "X", bi);
+				//Using Daniel's approach
+				String hex = DatatypeConverter.printHexBinary(digest);
+				//BigInteger bi = new BigInteger(1, digest);
+				//BigInteger bi = new BigInteger(1, digest);
+				//String hex = String.format("%0" + (digest.length << 1) + "X", bi);
 				if(hex.startsWith("00000")) {
 					char position = hex.charAt(5);
 					char password = hex.charAt(6);
