@@ -20,6 +20,7 @@ public class _Day6_RepeatedCode {
 			codes.add(nextLine);
 		}
 		scanner.close();
+		System.out.println(getMostCommonErrorCode(codes));
 		System.out.println(getLeastCommonErrorCode(codes));
 	}
 
