@@ -1,9 +1,6 @@
 package com.aoc;
 
-import java.awt.Font;
-import java.awt.FontMetrics;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -63,27 +60,21 @@ public class _Day8_AccessCode {
 	            if(arr[i][j] == 1) ++count;
 	         }
 	     }	
-		int rowWidth = 5;
-		int begin = 0;
-		while(true) {
-			for(int i = 0; i<arr.length; i++){
-		       for(int j = begin; j<rowWidth; j++){
-		    	   if(arr[i][j] == 1) {
-		    		   System.out.print("* ");
-		    	   } else {
-		    		   System.out.print("  ");   
-		    	   }
-		       }
-		       System.out.println();
-			}
-			begin+=5;
-			rowWidth+=5;
-			
-			if(begin >= arr[0].length) {
-				break;
-			}
-			System.out.println();
+
+		for(int i = 0; i<arr.length; i++){
+	       for(int j = 0; j<arr[i].length; j++){
+	    	   if(j != 0 && j % 5 == 0) {
+	    		   System.out.print("\t");
+	    	   }
+	    	   if(arr[i][j] == 1) {
+	    		   System.out.print("* ");
+	    	   } else {
+	    		   System.out.print("  ");   
+	    	   }
+	       }
+	       System.out.println();
 		}
+			
 		 
 		return count;
 	}
