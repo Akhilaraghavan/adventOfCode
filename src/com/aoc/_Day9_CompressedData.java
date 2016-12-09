@@ -7,7 +7,7 @@ import java.util.List;
 public class _Day9_CompressedData {
 	
 	public static void main(String args[]) throws Exception {
-		List<String> readAllLines = Files.readAllLines(new File("C:\\github\\adventOfCode\\Day9.txt").toPath());
+		List<String> readAllLines = Files.readAllLines(new File("Day9.txt").toPath());
 		String s = readAllLines.get(0);
 		long counter = 0;
 		counter = getDecompressedData1(s, counter);
