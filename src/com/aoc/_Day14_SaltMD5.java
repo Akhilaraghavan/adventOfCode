@@ -20,10 +20,7 @@ public class _Day14_SaltMD5 {
 		AtomicInteger index = new AtomicInteger(0);
 		
 		IntStream.range(0, Integer.MAX_VALUE).allMatch(i -> {
-			byte[] byteArray= (salt + i).getBytes(StandardCharsets.UTF_8);
-			byte[] digest = instance.digest(byteArray);
-			String hex = DatatypeConverter.printHexBinary(digest).toLowerCase();
-			hex = findHashFor(hex, instance, 0);
+			String hex = findHashFor(salt + i, instance, 0, 2017);
 			Matcher matcher = CONS_THREE.matcher(hex);
 			
 			if(matcher.find()) {
@@ -42,24 +39,19 @@ public class _Day14_SaltMD5 {
 		});
 	}
 
-	private static String findHashFor(String hex, MessageDigest instance, int count) {
-		if(count == 2016) {
+	private static String findHashFor(String hex, MessageDigest instance, int count, int end) {
+		if(count == end) {
 			return hex;
 		}
 		byte[] byteArray= hex.getBytes(StandardCharsets.UTF_8);
 		byte[] digest = instance.digest(byteArray);
-		return findHashFor(DatatypeConverter.printHexBinary(digest).toLowerCase(), instance, ++count);
+		return findHashFor(DatatypeConverter.printHexBinary(digest).toLowerCase(), instance, ++count, end);
 	}
 
 	static Map<Integer, String> cache = new HashMap<>(); 
 	private static boolean findFiveConsequtives(int index, String charToMatch, String salt, MessageDigest instance) {
 		return IntStream.range(index, index + 1000)
-		.anyMatch(i -> {
-			byte[] byteArray = (salt + i).getBytes(StandardCharsets.UTF_8);
-			byte[] digest = instance.digest(byteArray);
-			final String hex = DatatypeConverter.printHexBinary(digest).toLowerCase();
-			return cache.computeIfAbsent(i, (key) -> findHashFor(hex, instance, 0)).contains(charToMatch);
-		});
+		.anyMatch(i -> cache.computeIfAbsent(i, (key) -> findHashFor(salt + i, instance, 0, 2017)).contains(charToMatch));
 	}
 
 }
